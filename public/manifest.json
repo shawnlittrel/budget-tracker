@@ -1,4 +1,15 @@
 {
+     "name": "Budget Tracker",
+     "short_name": "Budget",
+     "description": "An app that allows users to track spending online or offline.",
+     "start_url": "index.html",
+     "background_color": "#085701",
+     "theme_color": "#085701",
+     "orientation": "portrait",
+     "display": "standalone",
+     
+     
+     
      "icons": [
           {
                "src": "/icons/icon-72x72.png",
@@ -40,12 +51,5 @@
                "sizes": "512x512",
                "type": "image/png"
           }
-     ],
-     "name": "Budget Tracker",
-     "short_name": "Budget",
-     "orientation": "portrait",
-     "display": "standalone",
-     "start_url": "index.html",
-     "theme_color": "#085701",
-     "background_color": "#085701"  
+     ]
 }
