@@ -24,7 +24,7 @@ A PWA that allows online and offline tracking of expenses and income.
     
 ## Installation
 ---
-The app is deployed on HEROKU.
+The app is deployed on [HEROKU](https://radiant-tor-99647.herokuapp.com/).
 
 
     
@@ -35,19 +35,13 @@ The app can be used inside the browser or installed on a user's device for easy 
 ### Screenshots
 ---
 
-![Screenshot](./test)
+![Sample Income](./assets/images/screenshots/graph-screen-1.JPG)
+
+![Sample Expense](./assets/images/screenshots/graph-screen-2.JPG)
 
 ---
 
 
-
----
-
-
-
-
-    
-    
 ## Licensing
 ---
 Copyright 2021 Shawn Littrel 
