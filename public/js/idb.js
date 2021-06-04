@@ -2,15 +2,15 @@
 let db;
 
 //establish connection to IndexDB called budget-tracker and set to V1
-const request = indexedDB.open("budget_tracker", 1);
+const request = indexedDB.open("budget", 1);
 
 //trigger event listener if version changes
 request.onupgradeneeded = function (event) {
   //save ref to db
-  const db = event.target.result;
+  db = event.target.result;
 
   //create ObjectStore called transactions, set it to auto_increment primary key
-  db.createObjectStore("transactions", { autoIncrement: true });
+  db.createObjectStore("moneyLog", { autoIncrement: true });
 };
 
 request.onsuccess = function (event) {
@@ -29,30 +29,32 @@ request.onerror = function (event) {
 
 //Save transaction to indexdb if there's no internet connection
 function saveRecord(savedTransaction) {
-  const transaction = db.transaction(["transactions"], "readwrite");
+  let transaction = db.transaction(["moneyLog"], "readwrite");
 
-  const moneyObjectStore = transaction.objectStore("transactions");
+  let moneyObjectStore = transaction.objectStore("moneyLog");
 
+  //add data from form to object store
   moneyObjectStore.add(savedTransaction);
 }
 
 function uploadTransaction() {
   //open transaction on database
-  const transaction = db.transaction(["transactions"], "readwrite");
+  let transaction = db.transaction(["moneyLog"], "readwrite");
 
   //access object store
-  const moneyObjectStore = transaction.objectStore("transactions");
+  let moneyObjectStore = transaction.objectStore("moneyLog");
 
   //get all records and set to variable
-  const getAll = moneyObjectStore.getAll();
+  let getAll = moneyObjectStore.getAll();
 
   //upon successful getAll, run the following:
+  //TODO: CHANGE getAll.result[0] to a string that encapsulates all offline entries -> for loop?
   getAll.onsuccess = function () {
     //if data is in the object store, send to api
     if (getAll.result.length > 0) {
       fetch("/api/transaction", {
         method: "POST",
-        body: JSON.stringify(transaction),
+        body: JSON.stringify(getAll.result),
         headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",
@@ -65,10 +67,10 @@ function uploadTransaction() {
           }
 
           //open another transaction
-          const transaction = db.transaction(["transactions"], "readwrite");
+          let transaction = db.transaction(["moneyLog"], "readwrite");
 
           //access object store
-          const moneyObjectStore = transaction.objectStore("transactions");
+          let moneyObjectStore = transaction.objectStore("moneyLog");
 
           //clear all items in object store
           moneyObjectStore.clear();
